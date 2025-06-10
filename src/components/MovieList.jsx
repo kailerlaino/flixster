@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./MovieList.css";
 import MovieCard from "./MovieCard";
+import { parseMovieData } from '../utils/utils';
+
 
 const MovieList = () => {
   const [nowPlaying, setNowPlaying] = useState([]);
@@ -27,9 +29,21 @@ const MovieList = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // const movieData = parseMovieData(nowPlaying);
   
   return (
     <div className="movie-list">
+      {
+        // console.log(nowPlaying)
+        console.log(nowPlaying)
+          // console.log(parseMovieData(nowPlaying))
+        // console.log(parseMovieData(nowPlaying))
+      }
+      {
+        parseMovieData(nowPlaying)  
+
+      }
       <MovieCard />
     </div>
   );

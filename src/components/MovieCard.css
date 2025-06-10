@@ -4,3 +4,8 @@
     border-color: black;
     padding: 2em;
 }
+
+.movie-card:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}
