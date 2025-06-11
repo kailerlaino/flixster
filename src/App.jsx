@@ -7,6 +7,7 @@ import "./App.css";
 const App = () => {
   const [nowPlaying, setNowPlaying] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
+  const [inSearch, setInSearch] = useState(false)
   const [query, setQuery] = useState('')
 
   const options = {
@@ -42,9 +43,9 @@ const App = () => {
       </header>
 
       <main>
-        <SearchForm onQueryChange={handleQuery}/>
+        <SearchForm onQueryChange={handleQuery} setInSearch={setInSearch}/>
         <section className="card-list">
-          <MovieList nowPlaying={nowPlaying} setNowPlaying={setNowPlaying}/>
+          {inSearch ? <MovieList nowPlaying={nowPlaying} setNowPlaying={setNowPlaying}/> : <MovieList nowPlaying={searchResults} setNowPlaying={setSearchResults}/>}
         </section>
         {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/TlP5WIxVirU?si=vK8Y4hOkh7horumc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
       </main>

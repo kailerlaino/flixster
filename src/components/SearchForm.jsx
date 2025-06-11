@@ -1,7 +1,7 @@
 import React from 'react'
 import './SearchForm.css'
 
-function SearchForm({ onQueryChange }) {
+function SearchForm({ onQueryChange, setInSearch }) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -12,9 +12,9 @@ function SearchForm({ onQueryChange }) {
   };
 
   return (
-    <form className="search-form" onSubmit={handleSubmit}>
+    <form className="search-form" onSubmit={handleSubmit} >
       <input className="search-input" type="text" name="query" placeholder="Search for Movies" />
-      <button className="search-button" type="submit">Search</button>
+      <button className="search-button" type="submit" onClick={() => setInSearch(true)}>Search</button>
       <button className="clear-button" /* type="" */>Clear</button>
     </form>
   );
