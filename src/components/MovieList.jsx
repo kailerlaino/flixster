@@ -21,16 +21,16 @@ const MovieList = ({ movies, loading }) => {
   }
   return (
     <>
-      <div className="movie-list">
+      <section className="movie-list">
         {movies.map((movie) => (
-          <div className="movie-card" key={movies.id}>
+          <article className="movie-card" key={movies.id}>
             <MovieCard
               id={movie.id}
               movie={movie}
             />
-          </div>
+          </article>
         ))}
-      </div>
+      </section>
     </>
   );
 };
