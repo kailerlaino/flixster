@@ -22,15 +22,14 @@ const App = () => {
   const fetchMovies = async (page = 1, append = false) => {
     try {
       setLoading(true);
-      console.log(append);
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`
+        
       );
       const data = await response.json();
       if (append) {
-        console.log("appending");
-        setNowPlaying((prev) => ({ ...prev, ...data.results }));
-        setFilteredMovies((prev) => ({ ...prev, ...data.results }));
+        setNowPlaying((prev) => ([...prev, ...data.results ]));
+        setFilteredMovies((prev) => ([ ...prev, ...data.results ]));
       } else {
         setNowPlaying(data.results);
         setFilteredMovies(data.results);
@@ -48,7 +47,7 @@ const App = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/keyword?query=${query}`
+        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}&include_adult=false&language=en-US&page=1`
       );
       const data = await response.json();
       // setSearchResults(data);
@@ -79,7 +78,7 @@ const App = () => {
       </header>
 
       <main>
-        <SearchForm setQuery={setQuery} setInSearch={setInSearch} />
+        <SearchForm setQuery={setQuery} searchMovies={searchMovies} />
         <section className="card-list">
           {<MovieList movies={filteredMovies} loading={loading} />}
           <button onClick={handleLoadMore}>Load more</button>
