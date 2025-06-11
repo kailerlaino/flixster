@@ -13,20 +13,26 @@ const App = () => {
   const [inSearch, setInSearch] = useState(false);
   const [query, setQuery] = useState("");
 
+  const [sortBy, setSortBy] = useState()
+
+  
+
   const TMDB_API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     fetchMovies();
-  }, []);
+  }, [sortBy]);
 
   const fetchMovies = async (page = 1, append = false) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`
-        
+        `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${sortBy}`
+        // `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`
       );
       const data = await response.json();
+      console.log("fetching")
+      console.log(data.results)
       if (append) {
         setNowPlaying((prev) => ([...prev, ...data.results ]));
         setFilteredMovies((prev) => ([ ...prev, ...data.results ]));
@@ -47,7 +53,7 @@ const App = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}&include_adult=false&language=en-US&page=1`
+        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}&include_adult=false&language=en-US&page=${currentPage}`
       );
       const data = await response.json();
       // setSearchResults(data);
@@ -66,6 +72,12 @@ const App = () => {
 
   const handleClear = () => {
     setFilteredMovies(nowPlaying)
+    setCurrentPage(1)
+  }
+
+  const changeSortType = (type) => {
+    setSortBy(type)
+    setCurrentPage(1)
   }
 
   // useEffect(() => {
@@ -83,10 +95,18 @@ const App = () => {
 
       <main>
         <SearchForm setQuery={setQuery} searchMovies={searchMovies} handleClear={handleClear}/>
-        <section className="card-list">
-          {<MovieList movies={filteredMovies} loading={loading} />}
-          <button onClick={handleLoadMore}>Load more</button>
-        </section>
+        {/* TODO: Turn sort by form into a component */}
+        <form>
+          <span>Sort By:   </span>
+          <select name="sortBy" onChange={(e) => changeSortType(e.target.value)}>
+            <option>Now Playing</option>
+            <option value="title.asc">Title (A-Z)</option>
+            <option value="release_date.desc">Release Date (Newest)</option>
+            <option value="vote_average.desc">Rating (Highest)</option>
+          </select>
+        </form>
+        <MovieList movies={filteredMovies} loading={loading} />
+        <button onClick={handleLoadMore}>Load more</button>
         {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/TlP5WIxVirU?si=vK8Y4hOkh7horumc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
       </main>
       <footer></footer>
