@@ -1,47 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./MovieList.css";
 import MovieCard from "./MovieCard";
-import { parseMovieData } from "../utils/utils";
 
-const MovieList = ({ nowPlaying, setNowPlaying }) => {
-  const [page, setPage] = useState(1);
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: import.meta.env.VITE_API_KEY,
-    },
-  };
+const MovieList = ({ movies, loading }) => {
+  
+  if (loading && movies.length === 0) {
+    return (
+      <>
+        <p>loading</p>
+      </>
+    )
+  }
 
-  const fetchData = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`,
-      options
-    );
-    const data = await response.json();
-    setNowPlaying(data);
-    setPage((prevPage) => prevPage + 1);
-  };
-
-  const fetchMoreData = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`,
-      options
-    );
-    const data = await response.json();
-    setNowPlaying((prevData) => ({
-      ...prevData,
-      results: [...(prevData?.results || []), ...data.results],
-    }));
-    setPage((prevPage) => prevPage + 1);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const parsedData = nowPlaying ? parseMovieData(nowPlaying) : [];
-
+  if (movies.length === 0) {
+    return (
+      <>
+        <p>No movies Found</p>
+      </>
+    )
+  }
   return (
     <>
       <div className="movie-list">
@@ -54,7 +31,6 @@ const MovieList = ({ nowPlaying, setNowPlaying }) => {
           </div>
         ))}
       </div>
-      <button onClick={fetchMoreData}>Load more</button>
     </>
   );
 };

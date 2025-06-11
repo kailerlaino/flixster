@@ -5,35 +5,71 @@ import NavBar from "./components/NavBar";
 import "./App.css";
 
 const App = () => {
-  const [nowPlaying, setNowPlaying] = useState(null);
+  const [nowPlaying, setNowPlaying] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchResults, setSearchResults] = useState(null);
-  const [inSearch, setInSearch] = useState(false)
-  const [query, setQuery] = useState('')
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [inSearch, setInSearch] = useState(false);
+  const [query, setQuery] = useState("");
 
-  const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: import.meta.env.VITE_API_KEY
-  }
-};
+  const TMDB_API_KEY = import.meta.env.VITE_API_KEY;
 
-  const searchData = async () => {
-    const response = await fetch(`https://api.themoviedb.org/3/search/keyword?query=${query}`, options);
-    const data = await response.json();
-    setSearchResults(data);
-    console.log(data)
-  }
-  
   useEffect(() => {
-    if (query !== '') {
-      searchData();
-    }
-  }, [query]);
+    fetchMovies();
+  }, []);
 
-  const handleQuery = (newQuery) => {
-    setQuery(newQuery);
+  const fetchMovies = async (page = 1, append = false) => {
+    try {
+      setLoading(true);
+      console.log(append);
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`
+      );
+      const data = await response.json();
+      if (append) {
+        console.log("appending");
+        setNowPlaying((prev) => ({ ...prev, ...data.results }));
+        setFilteredMovies((prev) => ({ ...prev, ...data.results }));
+      } else {
+        setNowPlaying(data.results);
+        setFilteredMovies(data.results);
+      }
+
+      setCurrentPage(data.page);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const searchMovies = async (query) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/keyword?query=${query}`
+      );
+      const data = await response.json();
+      // setSearchResults(data);
+      setFilteredMovies(data.results);
+      setQuery(query);
+    } catch (error) {
+      console.error("Error searching movies:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLoadMore = () => {
+    fetchMovies(currentPage + 1, true);
+  };
+
+  // useEffect(() => {
+  //   if (query !== "") {
+  //     searchData();
+  //   }
+  // }, [query]);
 
   return (
     <div className="App">
@@ -43,9 +79,10 @@ const App = () => {
       </header>
 
       <main>
-        <SearchForm onQueryChange={handleQuery} setInSearch={setInSearch}/>
+        <SearchForm setQuery={setQuery} setInSearch={setInSearch} />
         <section className="card-list">
-          {inSearch ? <MovieList nowPlaying={nowPlaying} setNowPlaying={setNowPlaying}/> : <MovieList nowPlaying={searchResults} setNowPlaying={setSearchResults}/>}
+          {<MovieList movies={filteredMovies} loading={loading} />}
+          <button onClick={handleLoadMore}>Load more</button>
         </section>
         {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/TlP5WIxVirU?si=vK8Y4hOkh7horumc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
       </main>
