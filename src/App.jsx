@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import MovieList from "./components/MovieList";
 import SearchForm from "./components/SearchForm";
+import SortForm from "./components/SortForm"
 import NavBar from "./components/NavBar";
 import "./App.css";
 
 const App = () => {
   const [nowPlaying, setNowPlaying] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [searchResults, setSearchResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [inSearch, setInSearch] = useState(false);
@@ -94,9 +94,11 @@ const App = () => {
       </header>
 
       <main>
+        <aside>
+        </aside>
         <SearchForm setQuery={setQuery} searchMovies={searchMovies} handleClear={handleClear}/>
         {/* TODO: Turn sort by form into a component */}
-        <form>
+        {/* <form>
           <span>Sort By:   </span>
           <select name="sortBy" onChange={(e) => changeSortType(e.target.value)}>
             <option>Now Playing</option>
@@ -104,7 +106,8 @@ const App = () => {
             <option value="release_date.desc">Release Date (Newest)</option>
             <option value="vote_average.desc">Rating (Highest)</option>
           </select>
-        </form>
+        </form> */}
+        <SortForm changeSortType={changeSortType} />
         <MovieList movies={filteredMovies} loading={loading} />
         <button onClick={handleLoadMore}>Load more</button>
         {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/TlP5WIxVirU?si=vK8Y4hOkh7horumc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
