@@ -64,6 +64,10 @@ const App = () => {
     fetchMovies(currentPage + 1, true);
   };
 
+  const handleClear = () => {
+    setFilteredMovies(nowPlaying)
+  }
+
   // useEffect(() => {
   //   if (query !== "") {
   //     searchData();
@@ -78,7 +82,7 @@ const App = () => {
       </header>
 
       <main>
-        <SearchForm setQuery={setQuery} searchMovies={searchMovies} />
+        <SearchForm setQuery={setQuery} searchMovies={searchMovies} handleClear={handleClear}/>
         <section className="card-list">
           {<MovieList movies={filteredMovies} loading={loading} />}
           <button onClick={handleLoadMore}>Load more</button>
