@@ -1,13 +1,12 @@
 import "./MovieCard.css";
 
-const MovieCard = ( {id, title, vote_average, poster_path} ) => {
-      const imgsrc = `https://image.tmdb.org/t/p/w500${poster_path}`
+const MovieCard = ( {id, movie} ) => {
 
   return (
     <div className="movie-card">
-      <img src={imgsrc}></img>
-      <h3>Title: {title}</h3>
-      <p>Average: {vote_average} </p>
+      <img src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "public/movie.png"}></img>
+      <h3>Title: {movie.title}</h3>
+      <p>Average: {movie.vote_average} </p>
     </div>
   );
 };

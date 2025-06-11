@@ -45,13 +45,11 @@ const MovieList = ({ nowPlaying, setNowPlaying }) => {
   return (
     <>
       <div className="movie-list">
-        {parsedData.map((movie) => (
-          <div className="movie-card" key={parsedData.id}>
+        {movies.map((movie) => (
+          <div className="movie-card" key={movies.id}>
             <MovieCard
               id={movie.id}
-              title={movie.title}
-              vote_average={movie.vote_average}
-              poster_path={movie.poster_path}
+              movie={movie}
             />
           </div>
         ))}
