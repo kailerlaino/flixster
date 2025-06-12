@@ -38,6 +38,10 @@
   /* overflow-x: hidden; */
 }
 
+footer {
+  margin: 20px
+}
+
 /* ul {
   padding-inline-start: 0px;
 } */

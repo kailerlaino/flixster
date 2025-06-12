@@ -135,7 +135,10 @@ const App = () => {
         </main>
       </div>
 
-      <footer></footer>
+      <footer>
+        Developed by {' '}
+        <a href="https://www.linkedin.com/in/kailerlaino">Kailer Laino</a>
+      </footer>
     </div>
   );
 };
