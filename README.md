@@ -40,15 +40,15 @@ Deployed Application (**required**): [Flixster Deployed Site](ADD_LINK_HERE)
     - [x] Uses CSS Flexbox or CSS Grid
     - [x] Movie tiles and images shrink/grow in response to window size
   - [ ] Users can click on a movie tile to view more details about a movie in a pop-up modal.
-    - [ ] The pop-up window is centered in the screen and does not occupy the entire screen.
-    - [ ] The pop-up window has a shadow to show that it is a pop-up and appears floating on the screen.
-    - [ ] The backdrop of the pop-up appears darker or in a different shade than before. including:
-    - [ ] The pop-up displays additional details about the moving including:
-      - [ ] Runtime in minutes
-      - [ ] Backdrop poster
-      - [ ] Release date
+    - [x] The pop-up window is centered in the screen and does not occupy the entire screen.
+    - [x] The pop-up window has a shadow to show that it is a pop-up and appears floating on the screen.
+    - [x] The backdrop of the pop-up appears darker or in a different shade than before. including:
+    - [x] The pop-up displays additional details about the moving including:
+      - [x] Runtime in minutes
+      - [x] Backdrop poster
+      - [x] Release date
       - [ ] Genres
-      - [ ] An overview
+      - [x] An overview
   - [x] Users can use a drop-down menu to sort movies.
     - [x] Drop-down allows movies to be sorted by:
       - [x] Title (alphabetic, A-Z)
@@ -56,8 +56,8 @@ Deployed Application (**required**): [Flixster Deployed Site](ADD_LINK_HERE)
       - [x] Vote average (descending, highest to lowest)
     - [x] When a sort option is clicked, movies display in a grid according to selected criterion.
   - [ ] Website displays:
-    - [ ] Header section
-    - [x] Banner section
+    - [x] Header section
+    - [ ] Banner section
     - [x] Search bar
     - [x] Movie grid
     - [x] Footer section
