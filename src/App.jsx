@@ -23,11 +23,12 @@ const App = () => {
   useEffect(() => {
     if (currentView === "home") {
       fetchMovies();
-    /* } else if (currentView === "favorites") {
+      /* } else if (currentView === "favorites") {
     //   showFavorites();
     // } else if (currentView === "watched") {
     //   showWatched();
-    */}
+    */
+    }
   }, [currentView, sortBy]);
 
   const fetchMovies = async (page = 1, append = false) => {
@@ -58,7 +59,6 @@ const App = () => {
       setLoading(true);
       const response = await fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}&include_adult=false&language=en-US&page=${currentPage}`
-
       );
       const data = await response.json();
       // setSearchResults(data);
@@ -86,14 +86,18 @@ const App = () => {
   };
 
   const handleFavoriteToggle = (movieId) => {
-    const newFavorites = favorites.includes(movieId) ? favorites.filter((id) => id !== movieId) : [...favorites, movieId]
-    setFavorites(newFavorites)
-  }
+    const newFavorites = favorites.includes(movieId)
+      ? favorites.filter((id) => id !== movieId)
+      : [...favorites, movieId];
+    setFavorites(newFavorites);
+  };
 
   const handleWatchedToggle = (movieId) => {
-    const newWatched = watched.includes(movieId) ? watched.filter((id) => id !== movieId) : [...watched, movieId]
-    setFavorites(newWatched)
-  }
+    const newWatched = watched.includes(movieId)
+      ? watched.filter((id) => id !== movieId)
+      : [...watched, movieId];
+    setFavorites(newWatched);
+  };
 
   const handleViewChange = (view) => {
     setCurrentView(view);
@@ -111,20 +115,26 @@ const App = () => {
         <h1>Flixster</h1>
       </header>
 
-      <main>
-        <aside>
-          <NavBar onViewChange={handleViewChange} />
-        </aside>
-        <SearchForm
-          setQuery={setQuery}
-          searchMovies={searchMovies}
-          handleClear={handleClear}
+      <div className="main-container">
+        <aside className="sidebar">
+            <NavBar onViewChange={handleViewChange} />
+          </aside>
+        <main className="content-area">
+          <SearchForm
+            setQuery={setQuery}
+            searchMovies={searchMovies}
+            handleClear={handleClear}
           />
-        <SortForm changeSortType={changeSortType} />
-        <MovieList movies={filteredMovies} loading={loading} />
-        <button onClick={handleLoadMore}>Load more</button>
-        {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/TlP5WIxVirU?si=vK8Y4hOkh7horumc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
-      </main>
+          <SortForm changeSortType={changeSortType} />
+          <MovieList movies={filteredMovies} loading={loading} />
+          {currentView === "home" && (
+                      <button onClick={handleLoadMore}>Load more</button>
+
+          )}
+          {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/TlP5WIxVirU?si=vK8Y4hOkh7horumc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
+        </main>
+      </div>
+
       <footer></footer>
     </div>
   );

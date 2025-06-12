@@ -26,3 +26,18 @@
     flex-direction: column;
   }
 }
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.content-area {
+  flex-grow: 1;
+  max-width:90%
+  /* overflow-x: hidden; */
+}
+
+/* ul {
+  padding-inline-start: 0px;
+} */
