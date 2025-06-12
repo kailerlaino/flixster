@@ -39,7 +39,7 @@ Deployed Application (**required**): [Flixster Deployed Site](ADD_LINK_HERE)
   - [x] Website implements responsive web design.
     - [x] Uses CSS Flexbox or CSS Grid
     - [x] Movie tiles and images shrink/grow in response to window size
-  - [ ] Users can click on a movie tile to view more details about a movie in a pop-up modal.
+  - [x] Users can click on a movie tile to view more details about a movie in a pop-up modal.
     - [x] The pop-up window is centered in the screen and does not occupy the entire screen.
     - [x] The pop-up window has a shadow to show that it is a pop-up and appears floating on the screen.
     - [x] The backdrop of the pop-up appears darker or in a different shade than before. including:
@@ -47,7 +47,7 @@ Deployed Application (**required**): [Flixster Deployed Site](ADD_LINK_HERE)
       - [x] Runtime in minutes
       - [x] Backdrop poster
       - [x] Release date
-      - [ ] Genres
+      - [x] Genres
       - [x] An overview
   - [x] Users can use a drop-down menu to sort movies.
     - [x] Drop-down allows movies to be sorted by:
@@ -69,9 +69,9 @@ Deployed Application (**required**): [Flixster Deployed Site](ADD_LINK_HERE)
 #### STRETCH FEATURES
 
 
-- [ ] **Embedded Movie Trailers**
-  - [ ] Within the pop-up modal displaying a movie's details, the movie trailer is viewable.
-    - [ ] When the trailer is clicked, users can play the movie trailer.
+- [x] **Embedded Movie Trailers**
+  - [x] Within the pop-up modal displaying a movie's details, the movie trailer is viewable.
+    - [x] When the trailer is clicked, users can play the movie trailer.
 - [ ] **Favorite Button**
   - [ ] For each movie displayed, users can favorite the movie.
   - [ ] There should be visual element (such as a heart icon) on each movie's tile to show whether or not the movie has been favorited.

@@ -1,29 +1,42 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
-
 export default function Modal({ movie }) {
   const [modal, setModal] = useState(false);
   const [genres, setGenres] = useState([]);
+  const [videoKey, setVideoKey] = useState(null)
 
   const TMDB_API_KEY = import.meta.env.VITE_API_KEY;
 
   // TODO: attempt to fetch genre details
-  // useEffect(() => {
-  //   fetchDetails();
-  // }, []);
+  useEffect(() => {
+    fetchGenres();
+    fetchVideos();
+  }, []);
 
-  // const fetchDetails = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://api.themoviedb.org/3/movie/${movie.id}?api_key=${import.meta.env.VITE_API_KEY}?language=en-US`
-  //     );
-  //     const data = await response.json();
-  //     setGenres(data.genres)
-  //     // setSearchResults(data);
-  //   } catch (error) {
-  //     console.error("Error obtaining movie details:", error);
-  //   }
-  // };
+  const fetchGenres = async () => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${movie.id}?api_key=${TMDB_API_KEY}&?language=en-US`
+      );
+      const data = await response.json();
+      setGenres(data.genres)
+    } catch (error) {
+      console.error("Error obtaining movie details:", error);
+    }
+  };
+
+  const fetchVideos = async () => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${TMDB_API_KEY}&?language=en-US`
+      );
+      const data = await response.json();
+      const trailer = data.results?.find((video) => video.type === "Trailer" && video.site === "YouTube")
+      setVideoKey(trailer?.key || null)
+    } catch (error) {
+      console.error("Error obtaining movie details:", error);
+    }
+  }
 
   const toggleModal = () => {
     setModal(!modal);
@@ -63,6 +76,24 @@ export default function Modal({ movie }) {
             <p>
               <b>Genre(s)</b>{" "}
             </p>
+              {genres && genres.length > 0 && (
+                <div>
+                  {genres.map((genre) => (
+                    <p key={genre.id}>
+                      {genre.name}
+                    </p>
+                  ))}
+                  </div>
+              )}
+
+              {videoKey && (
+                <div>
+                  <iframe 
+                  src={`https://www.youtube.com/embed/${videoKey}`}
+                  />
+                  </div>
+              )}
+            
             {/* Need to grab genres from movie details API */}
             <button className="close-modal" onClick={toggleModal}>
               X
