@@ -117,26 +117,24 @@ const App = () => {
 
       <div className="main-container">
         <aside className="sidebar">
-            <NavBar onViewChange={handleViewChange} />
-          </aside>
+          <NavBar onViewChange={handleViewChange} />
+        </aside>
         <main className="content-area">
-          <SearchForm
+          {currentView === "home" && <SearchForm
             setQuery={setQuery}
             searchMovies={searchMovies}
             handleClear={handleClear}
-          />
-          <SortForm changeSortType={changeSortType} />
+          />}
+          {currentView === "home" && <SortForm changeSortType={changeSortType} />}
           <MovieList movies={filteredMovies} loading={loading} />
           {currentView === "home" && (
-                      <button onClick={handleLoadMore}>Load more</button>
-
+            <button onClick={handleLoadMore}>Load more</button>
           )}
-          {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/TlP5WIxVirU?si=vK8Y4hOkh7horumc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
         </main>
       </div>
 
       <footer>
-        Developed by {' '}
+        Developed by{" "}
         <a href="https://www.linkedin.com/in/kailerlaino">Kailer Laino</a>
       </footer>
     </div>

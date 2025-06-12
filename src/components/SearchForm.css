@@ -19,24 +19,4 @@
     border-color: #3498db;
   }
   
-  .search-button, .clear-button {
-    padding: 10px 15px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: background-color 0.2s, box-shadow 0.2s;
-  }
-  
-  .search-button:hover, .clear-button:hover {
-    background-color: #2980b9;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  }
-  
-  .search-button:active, .clear-button:active {
-    background-color: #2471a3;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  }
   

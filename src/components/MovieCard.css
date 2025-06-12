@@ -13,25 +13,30 @@
   cursor: pointer;
 }
 
+.movie-card:hover .icon-container {
+  display: flex;
+}
+
+
 .movie-card img {
   max-width: 100%;
   border-radius: 10px;
 }
 .icon-container {
+  display: none;
   position: absolute;
   top: 0;
   right: 0;
-  display: flex;
   flex-direction: column;
   padding: 8px;
+  border: 4px;
 }
+
 
 .heart:hover {
   color: red;
-  padding: 4px;
 }
 
 .video:hover {
   color: green;
-  padding: 4px;
 }

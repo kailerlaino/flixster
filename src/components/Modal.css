@@ -23,6 +23,9 @@ body.active-modal {
   background: rgba(49, 49, 49, 0.8);
 }
 
+.modal { z-index: 99 !important; }
+
+
 .modal-content {
   position: fixed;
   top: 50%;

@@ -44,7 +44,7 @@ Deployed Application (**required**): [Flixster Deployed Site](ADD_LINK_HERE)
     - [x] The pop-up window has a shadow to show that it is a pop-up and appears floating on the screen.
     - [x] The backdrop of the pop-up appears darker or in a different shade than before. including:
     - [x] The pop-up displays additional details about the moving including:
-      - [x] Runtime in minutes
+      - [ ] Runtime in minutes
       - [x] Backdrop poster
       - [x] Release date
       - [x] Genres
