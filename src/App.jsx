@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import MovieList from "./components/MovieList";
 import SearchForm from "./components/SearchForm";
-import SortForm from "./components/SortForm"
+import SortForm from "./components/SortForm";
 import NavBar from "./components/NavBar";
 import "./App.css";
 
@@ -12,28 +12,34 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [inSearch, setInSearch] = useState(false);
   const [query, setQuery] = useState("");
+  const [currentView, setCurrentView] = useState("home");
 
-  const [sortBy, setSortBy] = useState()
-
-  
+  const [sortBy, setSortBy] = useState();
+  const [favorites, setFavorites] = useState([]);
+  const [watched, setWatched] = useState([]);
 
   const TMDB_API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
-    fetchMovies();
-  }, [sortBy]);
+    if (currentView === "home") {
+      fetchMovies();
+    /* } else if (currentView === "favorites") {
+    //   showFavorites();
+    // } else if (currentView === "watched") {
+    //   showWatched();
+    */}
+  }, [currentView, sortBy]);
 
   const fetchMovies = async (page = 1, append = false) => {
     try {
       setLoading(true);
       const response = await fetch(
         `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${sortBy}`
-        // `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`
       );
       const data = await response.json();
       if (append) {
-        setNowPlaying((prev) => ([...prev, ...data.results ]));
-        setFilteredMovies((prev) => ([ ...prev, ...data.results ]));
+        setNowPlaying((prev) => [...prev, ...data.results]);
+        setFilteredMovies((prev) => [...prev, ...data.results]);
       } else {
         setNowPlaying(data.results);
         setFilteredMovies(data.results);
@@ -52,6 +58,7 @@ const App = () => {
       setLoading(true);
       const response = await fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}&include_adult=false&language=en-US&page=${currentPage}`
+
       );
       const data = await response.json();
       // setSearchResults(data);
@@ -64,19 +71,33 @@ const App = () => {
     }
   };
 
+  const handleClear = () => {
+    setFilteredMovies(nowPlaying);
+    setCurrentPage(1);
+  };
+
+  const changeSortType = (type) => {
+    setSortBy(type);
+    setCurrentPage(1);
+  };
+
   const handleLoadMore = () => {
     fetchMovies(currentPage + 1, true);
   };
 
-  const handleClear = () => {
-    setFilteredMovies(nowPlaying)
-    setCurrentPage(1)
+  const handleFavoriteToggle = (movieId) => {
+    const newFavorites = favorites.includes(movieId) ? favorites.filter((id) => id !== movieId) : [...favorites, movieId]
+    setFavorites(newFavorites)
   }
 
-  const changeSortType = (type) => {
-    setSortBy(type)
-    setCurrentPage(1)
+  const handleWatchedToggle = (movieId) => {
+    const newWatched = watched.includes(movieId) ? watched.filter((id) => id !== movieId) : [...watched, movieId]
+    setFavorites(newWatched)
   }
+
+  const handleViewChange = (view) => {
+    setCurrentView(view);
+  };
 
   // useEffect(() => {
   //   if (query !== "") {
@@ -88,13 +109,17 @@ const App = () => {
     <div className="App">
       <header>
         <h1>Flixster</h1>
-        <NavBar onViewChange={handleViewChange} />
       </header>
 
       <main>
         <aside>
+          <NavBar onViewChange={handleViewChange} />
         </aside>
-        <SearchForm setQuery={setQuery} searchMovies={searchMovies} handleClear={handleClear}/>
+        <SearchForm
+          setQuery={setQuery}
+          searchMovies={searchMovies}
+          handleClear={handleClear}
+          />
         <SortForm changeSortType={changeSortType} />
         <MovieList movies={filteredMovies} loading={loading} />
         <button onClick={handleLoadMore}>Load more</button>

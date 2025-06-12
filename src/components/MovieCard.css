@@ -17,3 +17,11 @@
     max-width: 100%;
     border-radius: 10px;
 }
+
+.heart:hover {
+  color: red
+}
+
+.video:hover {
+  color: green;
+}
