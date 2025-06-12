@@ -14,8 +14,6 @@ const MovieCard = ( {id, movie} ) => {
         <Heart className="heart"/>
         <Video className="video"/>
       </div>
-      
-
       <Modal movie={movie}/>
     </>
   );

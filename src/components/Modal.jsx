@@ -11,7 +11,7 @@ export default function Modal({ movie }) {
   useEffect(() => {
     fetchGenres();
     fetchVideos();
-  }, []);
+  }, [movie]);
 
   const fetchGenres = async () => {
     try {
