@@ -31,8 +31,6 @@ const App = () => {
         // `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`
       );
       const data = await response.json();
-      console.log("fetching")
-      console.log(data.results)
       if (append) {
         setNowPlaying((prev) => ([...prev, ...data.results ]));
         setFilteredMovies((prev) => ([ ...prev, ...data.results ]));
@@ -97,16 +95,6 @@ const App = () => {
         <aside>
         </aside>
         <SearchForm setQuery={setQuery} searchMovies={searchMovies} handleClear={handleClear}/>
-        {/* TODO: Turn sort by form into a component */}
-        {/* <form>
-          <span>Sort By:   </span>
-          <select name="sortBy" onChange={(e) => changeSortType(e.target.value)}>
-            <option>Now Playing</option>
-            <option value="title.asc">Title (A-Z)</option>
-            <option value="release_date.desc">Release Date (Newest)</option>
-            <option value="vote_average.desc">Rating (Highest)</option>
-          </select>
-        </form> */}
         <SortForm changeSortType={changeSortType} />
         <MovieList movies={filteredMovies} loading={loading} />
         <button onClick={handleLoadMore}>Load more</button>
