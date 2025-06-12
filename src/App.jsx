@@ -88,7 +88,7 @@ const App = () => {
     <div className="App">
       <header>
         <h1>Flixster</h1>
-        <NavBar />
+        <NavBar onViewChange={handleViewChange} />
       </header>
 
       <main>
