@@ -130,9 +130,6 @@ const App = () => {
           <h2 className="banner-title">Discover New Movies with Flixster</h2>
         </div>
       </header>
-      <section >
-        
-      </section>
       <div className="main-container">
         <aside className="sidebar">
           <NavBar currentView={currentView} onViewChange={handleViewChange} />
