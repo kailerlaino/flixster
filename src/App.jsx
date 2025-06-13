@@ -6,11 +6,9 @@ import NavBar from "./components/NavBar";
 import "./App.css";
 
 const App = () => {
-  const [nowPlaying, setNowPlaying] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [inSearch, setInSearch] = useState(false);
   const [query, setQuery] = useState("");
   const [currentView, setCurrentView] = useState("home");
 
@@ -124,12 +122,6 @@ const App = () => {
   const handleViewChange = (view) => {
     setCurrentView(view);
   };
-
-  // useEffect(() => {
-  //   if (query !== "") {
-  //     searchData();
-  //   }
-  // }, [query]);
 
   return (
     <div className="App">
