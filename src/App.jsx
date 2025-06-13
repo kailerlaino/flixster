@@ -5,18 +5,19 @@ import SortForm from "./components/SortForm";
 import NavBar from "./components/NavBar";
 import "./App.css";
 
+const TMDB_API_KEY = import.meta.env.VITE_API_KEY;
+
 const App = () => {
   const [nowPlaying, setNowPlaying] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(null);
   const [currentView, setCurrentView] = useState("home");
   const [sortBy, setSortBy] = useState();
   const [favorites, setFavorites] = useState([]);
   const [watched, setWatched] = useState([]);
 
-  const TMDB_API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     if (currentView === "home") {
@@ -42,7 +43,6 @@ const App = () => {
         setNowPlaying(data.results);
         setFilteredMovies(data.results);
       }
-
       setCurrentPage(data.page);
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -51,15 +51,20 @@ const App = () => {
     }
   };
 
-  const searchMovies = async (query) => {
+  const searchMovies = async (query, page = 1, append = false) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}&include_adult=false&language=en-US&page=${currentPage}`
+        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}&include_adult=false&language=en-US&page=${page}`
       );
       const data = await response.json();
-      // setSearchResults(data);
-      setFilteredMovies(data.results);
+      if (append) {
+        setFilteredMovies((prev) => [...prev, ...data.results]);
+      } else {
+        setFilteredMovies(data.results);
+      }
+      setCurrentPage(data.page);
+
       setQuery(query);
     } catch (error) {
       console.error("Error searching movies:", error);
@@ -94,6 +99,7 @@ const App = () => {
 
   const handleClear = () => {
     fetchMovies(1);
+    setQuery(null)
   };
 
   const changeSortType = (type) => {
@@ -102,7 +108,11 @@ const App = () => {
   };
 
   const handleLoadMore = () => {
-    fetchMovies(currentPage + 1, true);
+    if (query) {
+      searchMovies(query, currentPage + 1, true)
+    } else {
+      fetchMovies(currentPage + 1, true);
+    }
   };
 
   const handleFavoriteToggle = (movieId) => {
@@ -137,9 +147,9 @@ const App = () => {
         <main className="content-area">
           {currentView === "home" && (
             <SearchForm
-              setQuery={setQuery}
               searchMovies={searchMovies}
               handleClear={handleClear}
+              query={query}
             />
           )}
           {currentView === "home" && (
