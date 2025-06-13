@@ -29,7 +29,7 @@ const MovieList = ({
     <>
       <section className="movie-list">
         {movies.map((movie) => (
-          <article className="movie-card" key={movies.id}>
+          <article className="movie-card" key={movie.id}>
             <MovieCard
               movie={movie}
               isFavorite={favorites.includes(movie.id)}
