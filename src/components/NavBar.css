@@ -18,3 +18,9 @@ li {
 .view-button.active:hover {
     background-color: 0891b2;
 }
+
+.navbar li button.active {
+    background-color: #e7f3ff;
+    color: #1877f2;
+    font-weight: 600;
+}
