@@ -32,8 +32,8 @@ const MovieList = ({
           <article className="movie-card" key={movies.id}>
             <MovieCard
               movie={movie}
-              favorites={favorites.includes(movie.id)}
-              watched={watched.includes(movie.id)}
+              isFavorite={favorites.includes(movie.id)}
+              isWatched={watched.includes(movie.id)}
               onFavoriteToggle={onFavoriteToggle}
               onWatchedToggle={onWatchedToggle}
             />

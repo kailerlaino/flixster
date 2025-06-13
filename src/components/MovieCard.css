@@ -22,7 +22,7 @@
   border-radius: 10px;
 }
 .icon-container {
-  display: none;
+  display: flex;
   position: absolute;
   top: 8px;
   right: 8px;
@@ -41,5 +41,21 @@
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  transition: background-color 0.2s, color 0.2s
+  transition: background-color 0.2s, color 0.2s;
+  padding: 0px;
+}
+
+.icon-button svg {
+  width: 16px;
+  height: 16px;
+  color: #606770;
+}
+
+.icon-button.favorite svg {
+  color: #e0245e;
+  fill: #e02453;
+}
+
+.icon-button.watched svg {
+  color: #17bf63
 }
