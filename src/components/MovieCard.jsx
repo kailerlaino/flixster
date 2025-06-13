@@ -27,7 +27,7 @@ const MovieCard = ({
         }
       ></img>
       <h3>{movie.title}</h3>
-      <p>{movie.vote_average} </p>
+      <p><b>Rating: </b>{movie.vote_average} </p>
       <div className="icon-container">
         <button
           className={`icon-button ${isFavorite ? "favorite" : ""}`}
