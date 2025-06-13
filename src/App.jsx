@@ -125,13 +125,13 @@ const App = () => {
 
   return (
     <div className="App">
-      <header>
-        <h1>Flixster</h1>
-      </header>
-      <section className="banner-section">
-        <div className="banner.container">
-          <h2 className="banner-title">Discover New Movies</h2>
+      <header className="banner-section">
+        <div className="banner-container">
+          <h2 className="banner-title">Discover New Movies with Flixster</h2>
         </div>
+      </header>
+      <section >
+        
       </section>
       <div className="main-container">
         <aside className="sidebar">
