@@ -42,6 +42,11 @@ footer {
   margin: 20px
 }
 
-/* ul {
-  padding-inline-start: 0px;
-} */
+.banner-section {
+  background-image: linear-gradient(to right, #4076ea, #6b1cf1);
+  color: white;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+  border: 10rem;
+}

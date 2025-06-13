@@ -128,7 +128,11 @@ const App = () => {
       <header>
         <h1>Flixster</h1>
       </header>
-
+      <section className="banner-section">
+        <div className="banner.container">
+          <h2 className="banner-title">Discover New Movies</h2>
+        </div>
+      </section>
       <div className="main-container">
         <aside className="sidebar">
           <NavBar currentView={currentView} onViewChange={handleViewChange} />
