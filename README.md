@@ -53,7 +53,7 @@ Deployed Application (**required**): [Flixster Deployed Site](https://flixster-y
       - [x] Release date (chronologically, most recent to oldest)
       - [x] Vote average (descending, highest to lowest)
     - [x] When a sort option is clicked, movies display in a grid according to selected criterion.
-  - [ ] Website displays:
+  - [x] Website displays:
     - [x] Header section
     - [x] Banner section
     - [x] Search bar
@@ -99,7 +99,7 @@ Deployed Application (**required**): [Flixster Deployed Site](https://flixster-y
 
 ### Walkthrough Video
 
-`https://www.loom.com/share/05eae7c620f5486e9f674144b3fda8ba?sid=1ec7f4a0-a567-475d-909e-1b356a5ee78c`
+https://www.loom.com/share/05eae7c620f5486e9f674144b3fda8ba?sid=1ec7f4a0-a567-475d-909e-1b356a5ee78c
 
 ### Reflection
 
