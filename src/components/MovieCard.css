@@ -10,7 +10,6 @@
 
 .movie-card:hover {
   background-color: lightgrey;
-  cursor: pointer;
 }
 
 .movie-card:hover .icon-container {

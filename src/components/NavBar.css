@@ -24,3 +24,7 @@ li {
     color: #1877f2;
     font-weight: 600;
 }
+
+.navbar button {
+    width: 85px;
+}
