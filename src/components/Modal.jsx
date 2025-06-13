@@ -61,7 +61,7 @@ export default function Modal({ movie }) {
   return (
     <>
       <button onClick={toggleModal} className="btn-modal">
-        Open
+        Details
       </button>
 
       {modal && (
@@ -74,7 +74,7 @@ export default function Modal({ movie }) {
               src={
                 movie.poster_path
                   ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : "public/movie.png"
+                  : "/movie.png"
               }
             ></img>
             <p>
