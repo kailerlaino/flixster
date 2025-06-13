@@ -3,23 +3,31 @@ import "./Modal.css";
 export default function Modal({ movie }) {
   const [modal, setModal] = useState(false);
   const [genres, setGenres] = useState([]);
-  const [videoKey, setVideoKey] = useState(null)
+  const [runtime, setRuntime] = useState(0);
+  const [videoKey, setVideoKey] = useState(null);
 
   const TMDB_API_KEY = import.meta.env.VITE_API_KEY;
 
   // TODO: attempt to fetch genre details
   useEffect(() => {
-    fetchGenres();
+    fetchDetails();
     fetchVideos();
   }, [movie]);
 
-  const fetchGenres = async () => {
+  const calculateRuntime = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}`;
+  };
+
+  const fetchDetails = async () => {
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${movie.id}?api_key=${TMDB_API_KEY}&?language=en-US`
       );
       const data = await response.json();
-      setGenres(data.genres)
+      setGenres(data.genres);
+      setRuntime(data.runtime);
     } catch (error) {
       console.error("Error obtaining movie details:", error);
     }
@@ -31,12 +39,14 @@ export default function Modal({ movie }) {
         `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${TMDB_API_KEY}&?language=en-US`
       );
       const data = await response.json();
-      const trailer = data.results?.find((video) => video.type === "Trailer" && video.site === "YouTube")
-      setVideoKey(trailer?.key || null)
+      const trailer = data.results?.find(
+        (video) => video.type === "Trailer" && video.site === "YouTube"
+      );
+      setVideoKey(trailer?.key || null);
     } catch (error) {
       console.error("Error obtaining movie details:", error);
     }
-  }
+  };
 
   const toggleModal = () => {
     setModal(!modal);
@@ -68,6 +78,9 @@ export default function Modal({ movie }) {
               }
             ></img>
             <p>
+              <b>Runtime:</b> {calculateRuntime(runtime)}
+            </p>
+            <p>
               <b>Release Date:</b> {movie.release_date}
             </p>
             <p>
@@ -76,24 +89,20 @@ export default function Modal({ movie }) {
             <p>
               <b>Genre(s)</b>{" "}
             </p>
-              {genres && genres.length > 0 && (
-                <div>
-                  {genres.map((genre) => (
-                    <p key={genre.id}>
-                      {genre.name}
-                    </p>
-                  ))}
-                  </div>
-              )}
+            {genres && genres.length > 0 && (
+              <div>
+                {genres.map((genre) => (
+                  <p key={genre.id}>{genre.name}</p>
+                ))}
+              </div>
+            )}
 
-              {videoKey && (
-                <div>
-                  <iframe 
-                  src={`https://www.youtube.com/embed/${videoKey}`}
-                  />
-                  </div>
-              )}
-            
+            {videoKey && (
+              <div>
+                <iframe src={`https://www.youtube.com/embed/${videoKey}`} />
+              </div>
+            )}
+
             {/* Need to grab genres from movie details API */}
             <button className="close-modal" onClick={toggleModal}>
               X
