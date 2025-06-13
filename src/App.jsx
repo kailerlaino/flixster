@@ -23,11 +23,10 @@ const App = () => {
   useEffect(() => {
     if (currentView === "home") {
       fetchMovies();
-      /* } else if (currentView === "favorites") {
-    //   showFavorites();
-    // } else if (currentView === "watched") {
-    //   showWatched();
-    */
+    } else if (currentView === "favorites") {
+      fetchMoviesByIds(favorites);
+    } else if (currentView === "watched") {
+      fetchMoviesByIds(watched);
     }
   }, [currentView, sortBy]);
 
@@ -71,9 +70,32 @@ const App = () => {
     }
   };
 
+  const fetchMoviesByIds = async (ids) => {
+    setLoading(true);
+    if (ids.length == 0) {
+      setFilteredMovies([]);
+      setLoading(false);
+      return;
+    }
+    try {
+      const data = await Promise.all(
+        ids.map((id) =>
+          fetch(
+            `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&query=${query}&language=en-US`
+          ).then((res) => res.json())
+        )
+      );
+
+      setFilteredMovies(data.filter((movie) => movie.id));
+    } catch (error) {
+      console.error("Error fetching movies by IDs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleClear = () => {
-    setFilteredMovies(nowPlaying);
-    setCurrentPage(1);
+    fetchMovies(1);
   };
 
   const changeSortType = (type) => {
@@ -96,7 +118,7 @@ const App = () => {
     const newWatched = watched.includes(movieId)
       ? watched.filter((id) => id !== movieId)
       : [...watched, movieId];
-    setFavorites(newWatched);
+    setWatched(newWatched);
   };
 
   const handleViewChange = (view) => {
@@ -117,16 +139,27 @@ const App = () => {
 
       <div className="main-container">
         <aside className="sidebar">
-          <NavBar onViewChange={handleViewChange} />
+          <NavBar currentView={currentView} onViewChange={handleViewChange} />
         </aside>
         <main className="content-area">
-          {currentView === "home" && <SearchForm
-            setQuery={setQuery}
-            searchMovies={searchMovies}
-            handleClear={handleClear}
-          />}
-          {currentView === "home" && <SortForm changeSortType={changeSortType} />}
-          <MovieList movies={filteredMovies} loading={loading} />
+          {currentView === "home" && (
+            <SearchForm
+              setQuery={setQuery}
+              searchMovies={searchMovies}
+              handleClear={handleClear}
+            />
+          )}
+          {currentView === "home" && (
+            <SortForm changeSortType={changeSortType} />
+          )}
+          <MovieList
+            movies={filteredMovies}
+            loading={loading}
+            favorites={favorites}
+            watched={watched}
+            onFavoriteToggle={handleFavoriteToggle}
+            onWatchedToggle={handleWatchedToggle}
+          />
           {currentView === "home" && (
             <button onClick={handleLoadMore}>Load more</button>
           )}

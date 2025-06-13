@@ -2,14 +2,20 @@ import { useState } from "react";
 import "./MovieList.css";
 import MovieCard from "./MovieCard";
 
-const MovieList = ({ movies, loading }) => {
-  
+const MovieList = ({
+  movies,
+  loading,
+  favorites,
+  watched,
+  onFavoriteToggle,
+  onWatchedToggle,
+}) => {
   if (loading && movies.length === 0) {
     return (
       <>
-        <p>loading</p>
+        <p>loading...</p>
       </>
-    )
+    );
   }
 
   if (movies.length === 0) {
@@ -17,7 +23,7 @@ const MovieList = ({ movies, loading }) => {
       <>
         <p>No movies Found</p>
       </>
-    )
+    );
   }
   return (
     <>
@@ -25,8 +31,11 @@ const MovieList = ({ movies, loading }) => {
         {movies.map((movie) => (
           <article className="movie-card" key={movies.id}>
             <MovieCard
-              id={movie.id}
               movie={movie}
+              favorites={favorites.includes(movie.id)}
+              watched={watched.includes(movie.id)}
+              onFavoriteToggle={onFavoriteToggle}
+              onWatchedToggle={onWatchedToggle}
             />
           </article>
         ))}
